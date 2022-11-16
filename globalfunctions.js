@@ -184,7 +184,13 @@ module.exports = {
 		database: process.env.MYSQLDB,
 		socketPath: "/var/run/mysqld/mysqld.sock"
 	}),
+	gameFormating: function(str){
+		return str.replaceAll('{VAL_USERNAME}', vars.username)
+	
+	},
 	gameInteraction: async function(interaction){
+	
+		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
 		
 		var playEmbed = new Discord.EmbedBuilder();
 		var playEmbedRow = new Discord.ActionRowBuilder();
@@ -216,10 +222,88 @@ module.exports = {
 		ctx.textAlign = 'center';
 		ctx.fillStyle = "#111";
 
+	
 		
-		const img_textbox = await Canvas.loadImage('./assets/images/textbox.png')
-		const img_textdone = await Canvas.loadImage('./assets/images/textdone.png')
 
+
+
+
+
+
+
+
+
+		let gamedata = require('./gamedata/game.json');
+		var item = vars.interaction;
+		vars.interaction++;
+		
+		console.log(gamedata.gameplay[item].textballoon_text);
+		
+		//Render textballoon
+		if(gamedata.gameplay[item].enable_textballoon){
+			const img_textbox = await Canvas.loadImage('./assets/images/textbox.png')
+			const img_textdone = await Canvas.loadImage('./assets/images/textdone.png')
+			
+			// Fade in effect
+			if(gamedata.gameplay[item].textballoon_fadein){
+				var task_done = false;
+				var textbox_animation_alpha = 0;
+				
+				while(!task_done){
+					ctx.fillStyle = "#ffffff";
+					ctx.fillRect(0, 0, canvas.width, canvas.height);
+				
+				
+					ctx.globalAlpha = textbox_animation_alpha/10;
+					ctx.drawImage(img_textbox, 0, 0); 
+					textbox_animation_alpha++;
+					ctx.globalAlpha = 1;
+					
+					if(textbox_animation_alpha == 10) task_done = true;
+					
+					encoder.addFrame(ctx);
+				}
+			} 
+			// Draw text
+			// TODO: Make text animation optional
+			for(var i = 0; i <= gamedata.gameplay[item].textballoon_text.length; i++){
+				ctx.fillStyle = "#ffffff";
+				ctx.fillRect(0, 0, canvas.width, canvas.height);
+				
+				ctx.drawImage(img_textbox, 0, 0); 
+				
+				ctx.fillStyle = "#3d66b8";
+				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_author), 199, 172);
+				
+				ctx.fillStyle = "#a1aec7";
+				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_text).slice(0, i), 199, 208);
+				
+				
+				
+				encoder.addFrame(ctx);
+			}
+			// TODO: Make fadeout function.
+			
+			// Add text done symbol at the last frame.
+			ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
+			encoder.addFrame(ctx);
+		
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/*
 		if(vars.room == 0){
 			if(vars.interaction == 0){
 				var textbox = "Hi and welcome to Strategy game."
@@ -355,7 +439,7 @@ module.exports = {
 			}
 		
 		
-		}
+		}*/
 
 		 
 		 
@@ -368,16 +452,24 @@ module.exports = {
 		
 		const attachment = new Discord.AttachmentBuilder(stream, { name: 'game.gif' });
 		
-		playEmbed.setDescription("this is an early development build, expect bugs!");
+		//playEmbed.setDescription("this is an early development build, expect bugs!");
 		playEmbed.setColor("#ffffff");
 		playEmbed.setImage("attachment://game.gif");
 		
+		console.log("btn arr len: " + gamedata.gameplay[item].interactbutton.length);
+		
+		
+		//for(var i = 0; i <= gamedata.gameplay[item].interactbutton.length; i++){
+			
+		
+		
+		//}
 		if(vars.interaction == 3){
 			playEmbedRow.addComponents(
 				new Discord.ButtonBuilder()
 				.setCustomId("my_name_is")
 				.setLabel('My name is...')
-				.setStyle(Discord.ButtonStyle.Primary)
+				.setStyle(Discord.ButtonStyle.Secondary)
 				.setEmoji('🖊️')
 			);
 		} else {
@@ -385,8 +477,8 @@ module.exports = {
 				new Discord.ButtonBuilder()
 				.setCustomId("next")
 				.setLabel('Next')
-				.setStyle(Discord.ButtonStyle.Primary)
-				.setEmoji('⏩')
+				.setStyle(Discord.ButtonStyle.Secondary)
+				.setEmoji('1042544660968636467')
 			);
 		
 		}
@@ -395,20 +487,22 @@ module.exports = {
 		
 		
 		// Update message system.
-		if(interaction.isButton()){
-			await interaction.update({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		//if(interaction.isButton() || interaction.isModalSubmit()){
+			//await interaction.update({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
-		} else if(interaction.isModalSubmit()){
+		//} else if(interaction.isModalSubmit()){
 		
-			interaction.deferUpdate();
-			vars.message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
 		
-		} else if(interaction.isCommand()){
+			
+		
+		if(interaction.isCommand()){
 			await interaction.reply({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
 			const message = await interaction.fetchReply();
 			vars.message = message;
+		} else {
+			vars.message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 		}
 	
 	}
