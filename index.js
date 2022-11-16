@@ -1,49 +1,46 @@
-const glofunc = require('./globalfunctions');		// Global functions
-const imports = require('./imports');				// Global imports
+//funcion and value imports
+const glofunc = require('./globalfunctions');
+const imports = require('./imports');
 
+const Discord = imports.Discord
 
-require('dotenv').config();
-
-const Discord = require('discord.js');
+// Discord API spesific stuff
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+
+// Require other important librarys
 const fs = require("fs");
 const path = require("path");
 
+
+// Configuring Discord Token
+require('dotenv').config();
 const TOKEN = process.env.TOKEN;
 const rest = new REST({ version: '9' }).setToken(TOKEN);
 
+
+// Array with all bot commands that will be send later to Discord 
 var command_list = [];
 
 
-
-// this is for cleaning up code and is called when the app exits or closes for any reason.
-var cleanup = require('./cleanup').Cleanup(myCleanup);
-
-function myCleanup() {
-	console.log('Spoonful Bot Has Exited....');
-};
-
-
-
-
-
+// Normalize the paths for Events and Modules 
 var ModualNormalizedPath = require("path").join(__dirname, "function_modules");
 var EventsNormalizedPath = require("path").join(__dirname, "Events");
 
-
-
+// Bot in Production mode?
 var isProductionMode = glofunc.CheckProductionMode();
 
-//Setting all commands in maps
+
+// Count how many modules are there and if they are loaded.
 var mods_loaded = 0;
 var mods_total = 0;
 
-var arrayOfFiles = glofunc.GetAllFilesFromPath(ModualNormalizedPath);
-arrayOfFiles.forEach(function (file) {
+// Loading all function modules
+glofunc.GetAllFilesFromPath(ModualNormalizedPath).forEach(function (file) {
 	mods_total++;
 
+	// Log what its trying to load in.
 	process.stdout.write("\x1b[36m[" + mods_loaded + "/" + mods_total + "] \x1b[0mLoading up Module: " + file + "...");
 
 	try {
@@ -52,8 +49,10 @@ arrayOfFiles.forEach(function (file) {
 		
 		imports.ModuleType.set(file, type_module);
 		
+		
 		mods_loaded++;
 		process.stdout.write("   [ \x1b[32mOK\x1b[0m ] \n");
+		
 		if(type_module == "command"){
 		
 			// Command metadata
@@ -66,11 +65,15 @@ arrayOfFiles.forEach(function (file) {
 		}
 
 	} catch (e) {
+	
+		// When the module did fail to load it will show an error.
 		process.stdout.write("   [ \x1b[31mFAIL\x1b[0m ]\n");
 		console.log(e);
 		process.stdout.write("\x1b[31mERROR: The module '" + file + "' will not be loaded in, please fix the issue.\x1b[0m\n");
 	}
 });
+
+
 
 //Getting all events
 fs.readdirSync(EventsNormalizedPath).forEach(function (file) {
@@ -94,10 +97,11 @@ rest.put(Routes.applicationCommands("1042160078586925106"), { body: command_list
 
 
 // Make a connection to the database.
+/*
 glofunc.con.connect(function(err) {
 	if (err) throw err;
 	console.log("Connected!");
-});
+});*/
 
 
 // Send warning message when not all modules are loaded in.
@@ -108,6 +112,12 @@ if(mods_loaded == mods_total) {
 }
 
 
+// this is for cleaning up code and is called when the app exits or closes for any reason.
+var cleanup = require('./cleanup').Cleanup(myCleanup);
+
+function myCleanup() {
+	console.log('Spoonful Bot Has Exited....');
+};
 
 
 
