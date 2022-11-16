@@ -1,4 +1,66 @@
 {
-
+	"gameplay": [
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": true,
+			"textballoon_fadeout": false,
+			"textballoon_author": "???",
+			"textballoon_text": "Hi and welcome to Strategy game.",
+			"interactbutton": [
+				"BTN_NEXT"
+			]
+		},
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": false,
+			"textballoon_fadeout": false,
+			"textballoon_author": "???",
+			"textballoon_text": "This game is in early development so expect some bugs..",
+			"interactbutton": [
+				"BTN_NEXT"
+			]
+		},
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": false,
+			"textballoon_fadeout": false,
+			"textballoon_author": "???",
+			"textballoon_text": "Before we start please tell your name.",
+			"interactbutton": [
+				"BTN_INPUTUSERNAME"
+			]
+		},
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": false,
+			"textballoon_fadeout": false,
+			"textballoon_author": "{VAL_USERNAME}",
+			"textballoon_text": "My name is {VAL_USERNAME}, nice to meet you.",
+			"interactbutton": [
+				"BTN_NEXT"
+			]
+		},
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": false,
+			"textballoon_fadeout": false,
+			"textballoon_author": "???",
+			"textballoon_text": "I hope we have a great time toghetter!",
+			"interactbutton": [
+				"BTN_NEXT"
+			]
+		},
+		{
+			"enable_textballoon": true,
+			"textballoon_fadein": false,
+			"textballoon_fadeout": false,
+			"textballoon_author": "???",
+			"textballoon_text": "But no time for now, please follow me.",
+			"interactbutton": [
+				"BTN_EXITSTAGE"
+			]
+		}
+	
+	]
 
 }
