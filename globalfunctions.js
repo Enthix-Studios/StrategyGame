@@ -1,6 +1,5 @@
 const imports = require('./imports');
-const globalVars = require('./globalvars');
-const vars = require('./globalvars');
+const player = require('./globalvars').player;
 const axios = require('axios');
 const Canvas = require("canvas");
 const GIFEncoder = require('gifencoder');
@@ -11,7 +10,7 @@ require('dotenv').config();
 const Discord = imports.Discord;
 
 module.exports = {
-
+	
 	GetSingleMentionAfterCommandUsage: function GetSingleMentionAfterCommandUsage(msg) {
 
 		var msgcontent = msg.content;
@@ -184,23 +183,19 @@ module.exports = {
 		database: process.env.MYSQLDB,
 		socketPath: "/var/run/mysqld/mysqld.sock"
 	}),
-	gameFormating: function(str){
-		return str.replaceAll('{VAL_USERNAME}', vars.username)
+	gameFormating: function(str, interaction){
+		return str.replaceAll('{VAL_USERNAME}', player[interaction.user.id].username)
 	
 	},
 	gameInteraction: async function(interaction){
 	
 		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-		
+		if (!(interaction.user.id in player)){
+			player[interaction.user.id] = {"interaction": 0,"room":0,"message":null, "username":null};
+		};
+		console.log(player[interaction.user.id]);
 		var playEmbed = new Discord.EmbedBuilder();
 		var playEmbedRow = new Discord.ActionRowBuilder();
-		
-		
-		
-		
-		
-		
-		
 		
 		const canvas = Canvas.createCanvas(400, 225);
 		const ctx = canvas.getContext('2d');
@@ -222,20 +217,9 @@ module.exports = {
 		ctx.textAlign = 'center';
 		ctx.fillStyle = "#111";
 
-	
-		
-
-
-
-
-
-
-
-
-
 		let gamedata = require('./gamedata/game.json');
-		var item = vars.interaction;
-		vars.interaction++;
+		var item = player[interaction.user.id].interaction;
+		player[interaction.user.id].interaction++;
 		
 		console.log(gamedata.gameplay[item].textballoon_text);
 		
@@ -273,10 +257,10 @@ module.exports = {
 				ctx.drawImage(img_textbox, 0, 0); 
 				
 				ctx.fillStyle = "#3d66b8";
-				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_author), 199, 172);
+				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_author, interaction), 199, 172);
 				
 				ctx.fillStyle = "#a1aec7";
-				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_text).slice(0, i), 199, 208);
+				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_text, interaction).slice(0, i), 199, 208);
 				
 				
 				
@@ -304,8 +288,8 @@ module.exports = {
 
 
 		/*
-		if(vars.room == 0){
-			if(vars.interaction == 0){
+		if(player[interaction.user.id].room == 0){
+			if(player[interaction.user.id].interaction == 0){
 				var textbox = "Hi and welcome to Strategy game."
 				var animation_state = 0;
 				var textbox_animation_alpha = 0;
@@ -349,8 +333,8 @@ module.exports = {
 				
 				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 				encoder.addFrame(ctx);
-				vars.interaction++;
-			} else if(vars.interaction == 1){
+				player[interaction.user.id].interaction++;
+			} else if(player[interaction.user.id].interaction == 1){
 				var textbox = "This game is in early development so expect some bugs.."
 				
 				for(var i = 0; i <= textbox.length; i++){
@@ -370,8 +354,8 @@ module.exports = {
 				}
 				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 				encoder.addFrame(ctx);
-				vars.interaction++;
-			} else if(vars.interaction == 2){
+				player[interaction.user.id].interaction++;
+			} else if(player[interaction.user.id].interaction == 2){
 				var textbox = "Before we start please tell your name."
 				
 				for(var i = 0; i <= textbox.length; i++){
@@ -392,9 +376,10 @@ module.exports = {
 				
 				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 				encoder.addFrame(ctx);
-				vars.interaction++;
-			} else if(vars.interaction == 3){
-				var textbox = "My name is " + vars.username + ""
+				player[interaction.user.id].interaction++;
+			} else if(player[interaction.user.id].interaction == 3){
+				player[interaction.user.id].username = player[interaction.user.id].message
+				var textbox = "My name is " + player[interaction.user.id].username + ""
 				
 				for(var i = 0; i <= textbox.length; i++){
 					ctx.fillStyle = "#ffffff";
@@ -404,7 +389,7 @@ module.exports = {
 					ctx.drawImage(img_textbox, 0, 0); 
 					
 					ctx.fillStyle = "#3d66b8";
-					ctx.fillText(vars.username, 199, 172);
+					ctx.fillText(player[interaction.user.id].username, 199, 172);
 					
 					ctx.fillStyle = "#a1aec7";
 					ctx.fillText(textbox.slice(0, i), 199, 208);
@@ -413,9 +398,9 @@ module.exports = {
 				}
 				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 				encoder.addFrame(ctx);
-				vars.interaction++;
+				player[interaction.user.id].interaction++;
 				
-			} else if(vars.interaction == 4){
+			} else if(player[interaction.user.id].interaction == 4){
 				var textbox = "I hope we have a great time toghetter!"
 				
 				for(var i = 0; i <= textbox.length; i++){
@@ -435,7 +420,7 @@ module.exports = {
 				}
 				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 				encoder.addFrame(ctx);
-				vars.interaction++;
+				player[interaction.user.id].interaction++;
 			}
 		
 		
@@ -455,7 +440,6 @@ module.exports = {
 		//playEmbed.setDescription("this is an early development build, expect bugs!");
 		playEmbed.setColor("#ffffff");
 		playEmbed.setImage("attachment://game.gif");
-		
 		console.log("btn arr len: " + gamedata.gameplay[item].interactbutton.length);
 		
 		
@@ -464,7 +448,7 @@ module.exports = {
 		
 		
 		//}
-		if(vars.interaction == 3){
+		if(player[interaction.user.id].interaction == 3){
 			playEmbedRow.addComponents(
 				new Discord.ButtonBuilder()
 				.setCustomId("my_name_is")
@@ -491,20 +475,17 @@ module.exports = {
 			//await interaction.update({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
 		//} else if(interaction.isModalSubmit()){
-		
-			
-		
-			
+		//	interaction.deferUpdate();
+		//	player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 		
 		if(interaction.isCommand()){
 			await interaction.reply({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
 			const message = await interaction.fetchReply();
-			vars.message = message;
+			player[interaction.user.id].message = message;
 		} else {
-			vars.message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+			player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 		}
-	
 	}
 	
 	
