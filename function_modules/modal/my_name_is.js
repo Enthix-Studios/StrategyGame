@@ -11,7 +11,7 @@ module.exports = {
 		if (interaction.customId === 'modal_whats_your_name') {
 			
 			const name = interaction.fields.getTextInputValue('input_name');
-			vars.username = name;
+			vars.player[interaction.user.id].username = name;
 			
 			//Starting gameplay
 			glofunc.gameInteraction(interaction);

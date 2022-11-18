@@ -1,8 +1,8 @@
 const imports = require('./imports');
-const player = require('./globalvars').player;
+const vars = require('./globalvars');
 const axios = require('axios');
 const Canvas = require("canvas");
-const GIFEncoder = require('gifencoder');
+const GIFEncoder = require('gif-encoder-2');
 var mysql = require('mysql-await');
 require('dotenv').config();
 
@@ -36,6 +36,8 @@ module.exports = {
 		return userMentionedForAvatar;
 
 	},
+
+
 
 
 
@@ -184,22 +186,26 @@ module.exports = {
 		socketPath: "/var/run/mysqld/mysqld.sock"
 	}),
 	gameFormating: function(str, interaction){
-		return str.replaceAll('{VAL_USERNAME}', player[interaction.user.id].username)
+		return str.replaceAll('{VAL_USERNAME}', vars.player[interaction.user.id].username)
 	
 	},
 	gameInteraction: async function(interaction){
 	
 		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-		if (!(interaction.user.id in player)){
-			player[interaction.user.id] = {"interaction": 0,"room":0,"message":null, "username":null};
-		};
-		console.log(player[interaction.user.id]);
+		
+		//if (!(interaction.user.id in vars.player)){
+			//vars.player[interaction.user.id] = {"interaction": 0,"room":0,"message":null, "username":null};
+		//};
+		console.log(vars.player[interaction.user.id]);
+		
+		
+		
 		var playEmbed = new Discord.EmbedBuilder();
 		var playEmbedRow = new Discord.ActionRowBuilder();
 		
 		const canvas = Canvas.createCanvas(400, 225);
 		const ctx = canvas.getContext('2d');
-		const encoder = new GIFEncoder(canvas.width, canvas.height);
+		const encoder = new GIFEncoder(canvas.width, canvas.height, 'octree');
 		var stream = encoder.createReadStream();
 
 		encoder.start();
@@ -218,8 +224,8 @@ module.exports = {
 		ctx.fillStyle = "#111";
 
 		let gamedata = require('./gamedata/game.json');
-		var item = player[interaction.user.id].interaction;
-		player[interaction.user.id].interaction++;
+		var item = vars.player[interaction.user.id].interaction;
+		vars.player[interaction.user.id].interaction++;
 		
 		console.log(gamedata.gameplay[item].textballoon_text);
 		
@@ -288,8 +294,8 @@ module.exports = {
 
 
 		/*
-		if(player[interaction.user.id].room == 0){
-			if(player[interaction.user.id].interaction == 0){
+		if(vars.player[interaction.user.id].room == 0){
+			if(vars.player[interaction.user.id].interaction == 0){
 				var textbox = "Hi and welcome to Strategy game."
 				var animation_state = 0;
 				var textbox_animation_alpha = 0;
@@ -448,7 +454,7 @@ module.exports = {
 		
 		
 		//}
-		if(player[interaction.user.id].interaction == 3){
+		if(vars.player[interaction.user.id].interaction == 3){
 			playEmbedRow.addComponents(
 				new Discord.ButtonBuilder()
 				.setCustomId("my_name_is")
@@ -482,9 +488,9 @@ module.exports = {
 			await interaction.reply({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 			
 			const message = await interaction.fetchReply();
-			player[interaction.user.id].message = message;
+			vars.player[interaction.user.id].message = message;
 		} else {
-			player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+			vars.player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 		}
 	}
 	

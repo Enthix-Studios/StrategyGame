@@ -4,6 +4,7 @@
     "canvas": "^2.10.2",
     "discord.js": "^14.6.0",
     "dotenv": "^16.0.3",
+    "gif-encoder-2": "^1.0.5",
     "gifencoder": "^2.0.1",
     "mysql-await": "^2.2.2"
   }
