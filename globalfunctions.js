@@ -1,5 +1,6 @@
 const imports = require('./imports');
 const vars = require('./globalvars');
+const gamefunc = require('./gamefunctions');
 const axios = require('axios');
 const {Canvas, FontLibrary, loadImage} = require("skia-canvas");
 const GIFEncoder = require('gif-encoder-2');
@@ -185,10 +186,6 @@ module.exports = {
 		database: process.env.MYSQLDB,
 		socketPath: "/var/run/mysqld/mysqld.sock"
 	}),
-	gameFormating: function(str, interaction){
-		return str.replaceAll('{VAL_USERNAME}', vars.player[interaction.user.id].username)
-	
-	},
 	gameInteraction: async function(interaction){
 	
 		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
@@ -216,6 +213,10 @@ module.exports = {
 		//registerFont('./assets/fonts/electrolize.ttf', { family: "visitor" });
 		FontLibrary.use(["./assets/fonts/electrolize.ttf"]);
 		
+		//gamedata
+		let gamedata = require('./gamedata/game.json');
+		
+		
 		//clear canvas
 		ctx.fillStyle = "#ffffff";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -224,221 +225,21 @@ module.exports = {
 		ctx.textAlign = 'center';
 		ctx.fillStyle = "#111";
 
-		let gamedata = require('./gamedata/game.json');
-		var item = vars.player[interaction.user.id].interaction;
-		vars.player[interaction.user.id].interaction++;
 		
-		console.log(gamedata.gameplay[item].textballoon_text);
-		
-		//Render textballoon
-		if(gamedata.gameplay[item].enable_textballoon){
-			const img_textbox = await loadImage('./assets/images/textbox.png')
-			const img_textdone = await loadImage('./assets/images/textdone.png')
-			
-			// Fade in effect
-			if(gamedata.gameplay[item].textballoon_fadein){
-				var task_done = false;
-				var textbox_animation_alpha = 0;
-				
-				while(!task_done){
-					ctx.fillStyle = "#ffffff";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-				
-				
-					ctx.globalAlpha = textbox_animation_alpha/10;
-					ctx.drawImage(img_textbox, 0, 0); 
-					textbox_animation_alpha++;
-					ctx.globalAlpha = 1;
-					
-					if(textbox_animation_alpha == 10) task_done = true;
-					
-					encoder.addFrame(ctx);
-				}
-			} 
-			// Draw text
-			// TODO: Make text animation optional
-			for(var i = 0; i <= gamedata.gameplay[item].textballoon_text.length; i++){
-				ctx.fillStyle = "#ffffff";
-				ctx.fillRect(0, 0, canvas.width, canvas.height);
-				
-				ctx.drawImage(img_textbox, 0, 0); 
-				
-				ctx.fillStyle = "#3d66b8";
-				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_author, interaction), 199, 172);
-				
-				ctx.fillStyle = "#a1aec7";
-				ctx.fillText(module.exports.gameFormating(gamedata.gameplay[item].textballoon_text, interaction).slice(0, i), 199, 208);
-				
-				
-				
-				encoder.addFrame(ctx);
-			}
-			// TODO: Make fadeout function.
-			
-			// Add text done symbol at the last frame.
-			ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-			encoder.addFrame(ctx);
-		
-		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		/*
-		if(vars.player[interaction.user.id].room == 0){
-			if(vars.player[interaction.user.id].interaction == 0){
-				var textbox = "Hi and welcome to Strategy game."
-				var animation_state = 0;
-				var textbox_animation_alpha = 0;
-				
-				if(animation_state == 0){
-					while(animation_state == 0){
-						ctx.fillStyle = "#ffffff";
-						ctx.fillRect(0, 0, canvas.width, canvas.height);
-					
-					
-						ctx.globalAlpha = textbox_animation_alpha/10;
-						ctx.drawImage(img_textbox, 0, 0); 
-						textbox_animation_alpha++;
-						ctx.globalAlpha = 1;
-						
-						if(textbox_animation_alpha == 10) animation_state = 1;
-						
-						encoder.addFrame(ctx);
-					}
-				} 
-				if(animation_state == 1){
-				
-					for(var i = 0; i <= textbox.length; i++){
-						ctx.fillStyle = "#ffffff";
-						ctx.fillRect(0, 0, canvas.width, canvas.height);
-						
-						ctx.drawImage(img_textbox, 0, 0); 
-						
-						ctx.fillStyle = "#3d66b8";
-						ctx.fillText("???", 199, 172);
-						
-						ctx.fillStyle = "#a1aec7";
-						ctx.fillText(textbox.slice(0, i), 199, 208);
-						
-						
-						
-						encoder.addFrame(ctx);
-					}
-				}
-				
-				
-				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-				encoder.addFrame(ctx);
-				player[interaction.user.id].interaction++;
-			} else if(player[interaction.user.id].interaction == 1){
-				var textbox = "This game is in early development so expect some bugs.."
-				
-				for(var i = 0; i <= textbox.length; i++){
-					ctx.fillStyle = "#ffffff";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#111";
-					
-					ctx.drawImage(img_textbox, 0, 0); 
-					
-					ctx.fillStyle = "#3d66b8";
-					ctx.fillText("???", 199, 172);
-					
-					ctx.fillStyle = "#a1aec7";
-					ctx.fillText(textbox.slice(0, i), 199, 208);
-					
-					encoder.addFrame(ctx);
-				}
-				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-				encoder.addFrame(ctx);
-				player[interaction.user.id].interaction++;
-			} else if(player[interaction.user.id].interaction == 2){
-				var textbox = "Before we start please tell your name."
-				
-				for(var i = 0; i <= textbox.length; i++){
-					ctx.fillStyle = "#ffffff";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#111";
-					
-					ctx.drawImage(img_textbox, 0, 0); 
-					
-					ctx.fillStyle = "#3d66b8";
-					ctx.fillText("???", 199, 172);
-					
-					ctx.fillStyle = "#a1aec7";
-					ctx.fillText(textbox.slice(0, i), 199, 208);
-					
-					encoder.addFrame(ctx);
-				}
-				
-				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-				encoder.addFrame(ctx);
-				player[interaction.user.id].interaction++;
-			} else if(player[interaction.user.id].interaction == 3){
-				player[interaction.user.id].username = player[interaction.user.id].message
-				var textbox = "My name is " + player[interaction.user.id].username + ""
-				
-				for(var i = 0; i <= textbox.length; i++){
-					ctx.fillStyle = "#ffffff";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#111";
-					
-					ctx.drawImage(img_textbox, 0, 0); 
-					
-					ctx.fillStyle = "#3d66b8";
-					ctx.fillText(player[interaction.user.id].username, 199, 172);
-					
-					ctx.fillStyle = "#a1aec7";
-					ctx.fillText(textbox.slice(0, i), 199, 208);
-					
-					encoder.addFrame(ctx);
-				}
-				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-				encoder.addFrame(ctx);
-				player[interaction.user.id].interaction++;
-				
-			} else if(player[interaction.user.id].interaction == 4){
-				var textbox = "I hope we have a great time toghetter!"
-				
-				for(var i = 0; i <= textbox.length; i++){
-					ctx.fillStyle = "#ffffff";
-					ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.fillStyle = "#111";
-					
-					ctx.drawImage(img_textbox, 0, 0); 
-					
-					ctx.fillStyle = "#3d66b8";
-					ctx.fillText("???", 199, 172);
-					
-					ctx.fillStyle = "#a1aec7";
-					ctx.fillText(textbox.slice(0, i), 199, 208);
-					
-					encoder.addFrame(ctx);
-				}
-				ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-				encoder.addFrame(ctx);
-				player[interaction.user.id].interaction++;
-			}
+		var interaction_id = vars.player[interaction.user.id].interaction;
 		
 		
-		}*/
+		
+		gamefunc.textBalloon(canvas, ctx, encoder, gamedata.gameplay[interaction_id]);
 
-		 
-		 
+
+
 		 
 		 
 		encoder.finish();
 		
+		
+		vars.player[interaction.user.id].interaction++;
 		
 		
 		
@@ -447,7 +248,7 @@ module.exports = {
 		//playEmbed.setDescription("this is an early development build, expect bugs!");
 		playEmbed.setColor("#ffffff");
 		playEmbed.setImage("attachment://game.gif");
-		console.log("btn arr len: " + gamedata.gameplay[item].interactbutton.length);
+		console.log("btn arr len: " + gamedata.gameplay[interaction_id].interactbutton.length);
 		
 		
 		//for(var i = 0; i <= gamedata.gameplay[item].interactbutton.length; i++){
