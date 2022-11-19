@@ -6,6 +6,7 @@
     "dotenv": "^16.0.3",
     "gif-encoder-2": "^1.0.5",
     "gifencoder": "^2.0.1",
-    "mysql-await": "^2.2.2"
+    "mysql-await": "^2.2.2",
+    "skia-canvas": "^1.0.1"
   }
 }

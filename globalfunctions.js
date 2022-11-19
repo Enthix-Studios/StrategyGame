@@ -1,7 +1,7 @@
 const imports = require('./imports');
 const vars = require('./globalvars');
 const axios = require('axios');
-const Canvas = require("canvas");
+const {Canvas, FontLibrary, loadImage} = require("skia-canvas");
 const GIFEncoder = require('gif-encoder-2');
 var mysql = require('mysql-await');
 require('dotenv').config();
@@ -203,7 +203,7 @@ module.exports = {
 		var playEmbed = new Discord.EmbedBuilder();
 		var playEmbedRow = new Discord.ActionRowBuilder();
 		
-		const canvas = Canvas.createCanvas(400, 225);
+		const canvas = new Canvas(400, 225);
 		const ctx = canvas.getContext('2d');
 		const encoder = new GIFEncoder(canvas.width, canvas.height, 'octree');
 		var stream = encoder.createReadStream();
@@ -213,7 +213,8 @@ module.exports = {
 		encoder.setDelay(41);  // frame delay in ms
 		encoder.setQuality(10); // image quality. 10 is default.
 		
-		Canvas.registerFont('./assets/fonts/electrolize.ttf', { family: "visitor" });
+		//registerFont('./assets/fonts/electrolize.ttf', { family: "visitor" });
+		FontLibrary.use(["./assets/fonts/electrolize.ttf"]);
 		
 		//clear canvas
 		ctx.fillStyle = "#ffffff";
@@ -231,8 +232,8 @@ module.exports = {
 		
 		//Render textballoon
 		if(gamedata.gameplay[item].enable_textballoon){
-			const img_textbox = await Canvas.loadImage('./assets/images/textbox.png')
-			const img_textdone = await Canvas.loadImage('./assets/images/textdone.png')
+			const img_textbox = await loadImage('./assets/images/textbox.png')
+			const img_textdone = await loadImage('./assets/images/textdone.png')
 			
 			// Fade in effect
 			if(gamedata.gameplay[item].textballoon_fadein){
