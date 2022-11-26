@@ -1,7 +1,12 @@
+const vars = require('../../globalvars');
+
 module.exports = {
-	textFormatting: function(str, data){
-		str.replaceAll('{VAL_USERNAME}', data.username);
-		str.replaceAll('{VAL_GLOBAL_LEVEL}', data.global_level);
+	textFormatting: function(str, player){
+
+	
+	
+		str = str.replaceAll('{VAL_USERNAME}', player.username);
+		//str = str.replaceAll('{VAL_GLOBAL_LEVEL}', p_root.global_level);
 		
 		return str;
 	

@@ -15,10 +15,8 @@ module.exports = {
 		var interaction_id = vars.player[interaction.user.id].interaction;
 		
 		
-		console.log(p_render.frame);
 		
-		
-		var data = p_root.gamedata.gameplay[0];
+		var data = p_root.gamedata.gameplay[interaction_id];
 		
 		//Render textballoon
 		if(data.enable_textballoon){
@@ -26,61 +24,42 @@ module.exports = {
 			const img_textdone = await loadImage('./assets/images/textdone.png')
 			
 			// Fade in effect
-			if(data.textballoon_fadein){
+			if(data.textballoon_fadein && p_render.frame <= 10){
 			
 				//TODO: Recode textballoon
-				/*
-				var task_done = false;
-				var textbox_animation_alpha = 0;
+
+				p_render.ctx.globalAlpha = p_render.frame/10;
+				p_render.ctx.drawImage(img_textbox, 0, 0); 
+				p_render.ctx.globalAlpha = 1;
 				
-				while(!task_done){
-					//ctx.fillStyle = "#ffffff";
-					//ctx.fillRect(0, 0, canvas.width, canvas.height);
-					ctx.restore();
 				
-					ctx.globalAlpha = textbox_animation_alpha/10;
-					ctx.drawImage(img_textbox, 0, 0); 
-					textbox_animation_alpha++;
-					ctx.globalAlpha = 1;
-					
-					if(textbox_animation_alpha == 10) task_done = true;
-					
-					encoder.addFrame(ctx);
+			}  else {
+				// TODO: Make text animation optional
+				var frame_offset = p_render.frame;
+				if(data.textballoon_fadein) frame_offset = p_render.frame - 10;
+
+				p_render.ctx.drawImage(img_textbox, 0, 0); 
+				
+				p_render.ctx.fillStyle = "#3d66b8";
+				p_render.ctx.fillText(textFormatting.textFormatting(data.textballoon_author, p_root), 199, 172);
+				
+				p_render.ctx.fillStyle = "#a1aec7";
+				p_render.ctx.fillText(textFormatting.textFormatting(data.textballoon_text, p_root).toString().slice(0, frame_offset), 199, 208);
+				
+				if(data.textballoon_text.length == frame_offset){
+					// Add text done symbol at the last frame.
+					p_render.ctx.drawImage(img_textdone, p_render.canvas.width - 22, p_render.canvas.height - 22); 
+					p_render.interactionDone = true;
 				}
-				*/
-			} 
-			// Draw text
-			// TODO: Make text animation optional
-			/*
-			for(var i = 0; i <= data.textballoon_text.length; i++){
-				//ctx.fillStyle = "#ffffff";
-				//ctx.fillRect(0, 0, canvas.width, canvas.height);
-				
-				ctx.drawImage(img_textbox, 0, 0); 
-				
-				ctx.fillStyle = "#3d66b8";
-				ctx.fillText(textFormatting.textFormatting(data.textballoon_author, data), 199, 172);
-				
-				ctx.fillStyle = "#a1aec7";
-				ctx.fillText(textFormatting.textFormatting(data.textballoon_text, data).toString().slice(0, i), 199, 208);
 				
 				
 				
-				
+				// TODO: Make fadeout function.
+
 			}
-			// TODO: Make fadeout function.
 			
-			// Add text done symbol at the last frame.
-			ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
-			encoder.addFrame(ctx);
-		*/
 		}
 	
-	
-	
-	
-	
 	}
-
 
 }

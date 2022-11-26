@@ -17,8 +17,12 @@ module.exports = {
 	run: async function(interaction){
 	
 		// Check if interaction needs to send an deferUpdate.
-		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-		
+		if(interaction.isCommand()){
+			await interaction.reply({ content: "<a:Loading:1046076563407519784> **Loading game, Please wait...**"});
+			
+			const message = await interaction.fetchReply();
+			vars.player[interaction.user.id].message = message;
+		} else if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
 
 		// Making message objects for embeds and button row
 		var playEmbed = new Discord.EmbedBuilder();
@@ -52,9 +56,7 @@ module.exports = {
 		let gamedata = require('../gamedata/game.json');
 		p_root.gamedata = gamedata;
 		
-		// Start with empty canvas.
-		p_render.ctx.fillStyle = "#ffffff";
-		p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
+		
 		
 		// Set some font settings
 		p_render.ctx.font = "13px Electrolize";
@@ -71,6 +73,11 @@ module.exports = {
 			p_render.interactionDone = false
 			p_render.frame++;
 			
+			// Start with empty canvas.
+			p_render.ctx.fillStyle = "#ffffff";
+			p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
+			
+			
 			await renderTextBalloon.renderTextBalloon(interaction);
 			
 			// Anti infinite loop
@@ -78,6 +85,7 @@ module.exports = {
 				p_render.interactionDone = true;
 				if(p_root.message) p_root.message.channel.send("Warning: Infinite loop protection trigger, please check your code.");
 				console.log("Warning: Infinite loop protection trigger, please check your code.");
+				return;
 			}	
 			
 			
@@ -131,15 +139,9 @@ module.exports = {
 		}
 		
 	
-		// Check if interaction should update or send the embed message.
-		if(interaction.isCommand()){
-			await interaction.reply({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-			
-			const message = await interaction.fetchReply();
-			vars.player[interaction.user.id].message = message;
-		} else {
-			vars.player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-		}
+
+		vars.player[interaction.user.id].message.edit({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		
 		
 		
 	}
