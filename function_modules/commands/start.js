@@ -20,7 +20,13 @@ module.exports = {
 			vars.player[interaction.user.id].interaction = 0;
 			
 			vars.player[interaction.user.id].render = new Object();
-			vars.player[interaction.user.id].render.interactionDone = false; 
+			vars.player[interaction.user.id].render.canvas = null;
+			vars.player[interaction.user.id].render.ctx = null;
+			vars.player[interaction.user.id].render.encoder = null;
+			vars.player[interaction.user.id].render.stream = null;
+			vars.player[interaction.user.id].render.interactionDone = false;
+			vars.player[interaction.user.id].render.frame = -1; 
+			vars.player[interaction.user.id].gamedata = null;
 			
 		} else {
 			await interaction.reply("There is already a game session started.");
