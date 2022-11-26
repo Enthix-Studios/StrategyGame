@@ -1,6 +1,6 @@
 //Require important scripts
 const imports = require('../../imports');
-const glofunc = require('../../globalfunctions');
+const game = require('../../gamefunctions/game');
 const vars = require('../../globalvars');
 
 //Getting the default chat platform library(can be something else than Discord)
@@ -15,9 +15,12 @@ module.exports = {
 		//todo: check if user data already exist, if exist fill in values in array.
 		console.log(typeof(vars.player[interaction.user.id]));
 		if(typeof vars.player[interaction.user.id] === "undefined"){
-			vars.player[interaction.user.id] = new Object()
+			vars.player[interaction.user.id] = new Object();
 			vars.player[interaction.user.id].username = "ghost";
 			vars.player[interaction.user.id].interaction = 0;
+			
+			vars.player[interaction.user.id].render = new Object();
+			vars.player[interaction.user.id].render.interactionDone = false; 
 			
 		} else {
 			await interaction.reply("There is already a game session started.");
@@ -25,7 +28,7 @@ module.exports = {
 		}
 		
 		//Starting gameplay
-		glofunc.gameInteraction(interaction);
+		game.run(interaction);
 
 	},
 	ModuleType: "command",

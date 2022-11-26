@@ -1,5 +1,5 @@
 const imports = require('../../imports');
-var glofunc = require('../../globalfunctions');
+const game = require('../../gamefunctions/game');
 const vars = require('../../globalvars');
 const Canvas = require("canvas");
 const Discord = require('discord.js');
@@ -14,7 +14,7 @@ module.exports = {
 			vars.player[interaction.user.id].username = name;
 			
 			//Starting gameplay
-			glofunc.gameInteraction(interaction);
+			game.run(interaction);
 		}
 	},
 	ModuleType: "submitmodal"

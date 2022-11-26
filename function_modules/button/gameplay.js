@@ -1,5 +1,5 @@
 const imports = require('../../imports');
-var glofunc = require('../../globalfunctions');
+const game = require('../../gamefunctions/game');
 const Canvas = require("canvas");
 const Discord = require('discord.js');
 const axios = require("axios");
@@ -13,7 +13,7 @@ module.exports = {
 		
 			
 
-			glofunc.gameInteraction(interaction);
+			game.run(interaction);
 			
 
 		} else if (interaction.customId === 'my_name_is') {

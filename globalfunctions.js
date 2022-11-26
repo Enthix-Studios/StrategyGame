@@ -1,6 +1,5 @@
 const imports = require('./imports');
 const vars = require('./globalvars');
-const gamefunc = require('./gamefunctions');
 const axios = require('axios');
 const {Canvas, FontLibrary, loadImage} = require("skia-canvas");
 const GIFEncoder = require('gif-encoder-2');
@@ -185,116 +184,7 @@ module.exports = {
 		password: process.env.MYSQLPASS,
 		database: process.env.MYSQLDB,
 		socketPath: "/var/run/mysqld/mysqld.sock"
-	}),
-	gameInteraction: async function(interaction){
-	
-		if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-		
-		//if (!(interaction.user.id in vars.player)){
-			//vars.player[interaction.user.id] = {"interaction": 0,"room":0,"message":null, "username":null};
-		//};
-		console.log(vars.player[interaction.user.id]);
-		
-		
-		
-		var playEmbed = new Discord.EmbedBuilder();
-		var playEmbedRow = new Discord.ActionRowBuilder();
-		
-		const canvas = new Canvas(400, 225);
-		const ctx = canvas.getContext('2d');
-		const encoder = new GIFEncoder(canvas.width, canvas.height, 'octree');
-		var stream = encoder.createReadStream();
-
-		encoder.start();
-		encoder.setRepeat(-1);   // 0 for repeat, -1 for no-repeat
-		encoder.setDelay(41);  // frame delay in ms
-		encoder.setQuality(10); // image quality. 10 is default.
-		
-		//registerFont('./assets/fonts/electrolize.ttf', { family: "visitor" });
-		FontLibrary.use(["./assets/fonts/electrolize.ttf"]);
-		
-		//gamedata
-		let gamedata = require('./gamedata/game.json');
-		
-		
-		//clear canvas
-		ctx.fillStyle = "#ffffff";
-		ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-		ctx.font = "13px Electrolize";
-		ctx.textAlign = 'center';
-		ctx.fillStyle = "#111";
-
-		
-		var interaction_id = vars.player[interaction.user.id].interaction;
-		
-		
-		
-		gamefunc.textBalloon(canvas, ctx, encoder, gamedata.gameplay[interaction_id]);
-
-
-
-		 
-		 
-		encoder.finish();
-		
-		
-		vars.player[interaction.user.id].interaction++;
-		
-		
-		
-		const attachment = new Discord.AttachmentBuilder(stream, { name: 'game.gif' });
-		
-		//playEmbed.setDescription("this is an early development build, expect bugs!");
-		playEmbed.setColor("#ffffff");
-		playEmbed.setImage("attachment://game.gif");
-		console.log("btn arr len: " + gamedata.gameplay[interaction_id].interactbutton.length);
-		
-		
-		//for(var i = 0; i <= gamedata.gameplay[item].interactbutton.length; i++){
-			
-		
-		
-		//}
-		if(vars.player[interaction.user.id].interaction == 3){
-			playEmbedRow.addComponents(
-				new Discord.ButtonBuilder()
-				.setCustomId("my_name_is")
-				.setLabel('My name is...')
-				.setStyle(Discord.ButtonStyle.Secondary)
-				.setEmoji('🖊️')
-			);
-		} else {
-			playEmbedRow.addComponents(
-				new Discord.ButtonBuilder()
-				.setCustomId("next")
-				.setLabel('Next')
-				.setStyle(Discord.ButtonStyle.Secondary)
-				.setEmoji('1042544660968636467')
-			);
-		
-		}
-		
-	
-		
-		
-		// Update message system.
-		//if(interaction.isButton() || interaction.isModalSubmit()){
-			//await interaction.update({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-			
-		//} else if(interaction.isModalSubmit()){
-		//	interaction.deferUpdate();
-		//	player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-		
-		if(interaction.isCommand()){
-			await interaction.reply({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-			
-			const message = await interaction.fetchReply();
-			vars.player[interaction.user.id].message = message;
-		} else {
-			vars.player[interaction.user.id].message.edit({ embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
-		}
-	}
+	})
 	
 	
 };

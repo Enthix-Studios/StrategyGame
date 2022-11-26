@@ -1,14 +1,12 @@
-const imports = require('./imports');
-const vars = require('./globalvars');
 
-const {Canvas, FontLibrary, loadImage} = require("skia-canvas");
+const textFormatting = require('../formatting/textFormatting');
+const vars = require('../globalvars');
+
+const {loadImage} = require("skia-canvas");
 
 module.exports = {
-	gameFormating: async function(str, data){
-		return str.replaceAll('{VAL_USERNAME}', data.username)
-	
-	},
-	textBalloon: async function(canvas, ctx, encoder, data){
+
+	renderTextBalloon: function(canvas, ctx, encoder, data){
 	
 	
 		//Render textballoon
@@ -20,11 +18,12 @@ module.exports = {
 			if(data.textballoon_fadein){
 				var task_done = false;
 				var textbox_animation_alpha = 0;
+				ctx.save();
 				
 				while(!task_done){
 					//ctx.fillStyle = "#ffffff";
 					//ctx.fillRect(0, 0, canvas.width, canvas.height);
-				
+					ctx.restore();
 				
 					ctx.globalAlpha = textbox_animation_alpha/10;
 					ctx.drawImage(img_textbox, 0, 0); 
@@ -45,14 +44,14 @@ module.exports = {
 				ctx.drawImage(img_textbox, 0, 0); 
 				
 				ctx.fillStyle = "#3d66b8";
-				ctx.fillText(module.exports.gameFormating(data.textballoon_author, data), 199, 172);
+				ctx.fillText(textFormatting.textFormatting(data.textballoon_author, data), 199, 172);
 				
 				ctx.fillStyle = "#a1aec7";
-				ctx.fillText(module.exports.gameFormating(data.textballoon_text, data).slice(0, i), 199, 208);
+				ctx.fillText(textFormatting.textFormatting(data.textballoon_text, data).toString().slice(0, i), 199, 208);
 				
 				
 				
-				encoder.addFrame(ctx);
+				
 			}
 			// TODO: Make fadeout function.
 			
