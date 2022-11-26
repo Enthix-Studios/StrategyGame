@@ -1,5 +1,6 @@
 // Game function imports.
 const renderTextBalloon = require('./rendering/renderTextBalloon');
+const renderBackground = require('./rendering/renderBackground');
 
 // Generic variable imports
 const vars = require('../globalvars');
@@ -25,8 +26,10 @@ module.exports = {
 			
 			const message = await interaction.fetchReply();
 			vars.player[interaction.user.id].message = message;
-		} else if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-		
+		} else if(interaction.isButton() || interaction.isModalSubmit()){
+			console.log("deferUpdate");
+			interaction.deferUpdate();
+		}
 		
 		if(vars.player[interaction.user.id].render.working) return;
 		vars.player[interaction.user.id].render.working = true;
@@ -80,13 +83,17 @@ module.exports = {
 		while(!p_render.interactionDone){
 			p_render.interactionDone = false
 			p_render.frame++;
+			console.log(p_render.frame);
 			
 			// Start with empty canvas.
 			p_render.ctx.fillStyle = "#ffffff";
 			p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
 			
-			
+			console.log("a");
+			await renderBackground.render(interaction);
+			console.log("b");
 			await renderTextBalloon.renderTextBalloon(interaction);
+			console.log("c");
 			
 			// Anti infinite loop
 			if(p_render.frame == 128){
@@ -147,8 +154,13 @@ module.exports = {
 		}
 		
 	
-		
-		await vars.player[interaction.user.id].message.edit({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		if(interaction.isModalSubmit()){
+			await vars.player[interaction.user.id].message.edit({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		} else if(interaction.isCommand()){
+			await interaction.editReply({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		} else {
+			await interaction.update({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		}
 		vars.player[interaction.user.id].render.working = false;
 		
 		

@@ -50,6 +50,8 @@ module.exports = {
 					// Add text done symbol at the last frame.
 					p_render.ctx.drawImage(img_textdone, p_render.canvas.width - 22, p_render.canvas.height - 22); 
 					p_render.interactionDone = true;
+				} else {
+					p_render.interactionDone = false;
 				}
 				
 				
