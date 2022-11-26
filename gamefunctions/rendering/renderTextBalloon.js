@@ -1,14 +1,25 @@
 
 const textFormatting = require('../formatting/textFormatting');
-const vars = require('../globalvars');
+const vars = require('../../globalvars');
 
 const {loadImage} = require("skia-canvas");
 
 module.exports = {
 
-	renderTextBalloon: function(canvas, ctx, encoder, data){
+	renderTextBalloon: async function(interaction){
 	
 	
+		// Marking game state array location
+		var p_root = vars.player[interaction.user.id];
+		var p_render = p_root.render;
+		var interaction_id = vars.player[interaction.user.id].interaction;
+		
+		
+		console.log(p_render.frame);
+		
+		
+		var data = p_root.gamedata.gameplay[0];
+		
 		//Render textballoon
 		if(data.enable_textballoon){
 			const img_textbox = await loadImage('./assets/images/textbox.png')
@@ -16,9 +27,11 @@ module.exports = {
 			
 			// Fade in effect
 			if(data.textballoon_fadein){
+			
+				//TODO: Recode textballoon
+				/*
 				var task_done = false;
 				var textbox_animation_alpha = 0;
-				ctx.save();
 				
 				while(!task_done){
 					//ctx.fillStyle = "#ffffff";
@@ -34,9 +47,11 @@ module.exports = {
 					
 					encoder.addFrame(ctx);
 				}
+				*/
 			} 
 			// Draw text
 			// TODO: Make text animation optional
+			/*
 			for(var i = 0; i <= data.textballoon_text.length; i++){
 				//ctx.fillStyle = "#ffffff";
 				//ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -58,7 +73,7 @@ module.exports = {
 			// Add text done symbol at the last frame.
 			ctx.drawImage(img_textdone, canvas.width - 22, canvas.height - 22); 
 			encoder.addFrame(ctx);
-		
+		*/
 		}
 	
 	
