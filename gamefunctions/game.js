@@ -25,17 +25,18 @@ module.exports = {
 		var playEmbedRow = new Discord.ActionRowBuilder();
 		
 		// Marking game state array location
-		var p_render = vars.player[interaction.user.id].render;
-		var interaction_id = vars.player[interaction.user.id].interaction;
+		var p_root = vars.player[interaction.user.id];
+		var p_render = p_root.render;
+		
 		
 		
 		// Setting up the canvas
 		p_render.canvas = new Canvas(400, 225);
-		p_render.ctx = canvas.getContext('2d');
+		p_render.ctx = p_render.canvas.getContext('2d');
 		
 		// Setting up the gif encoder
-		p_render.encoder = new GIFEncoder(canvas.width, canvas.height, 'octree');
-		p_render.stream = vars.player[interaction.user.id].render.encoder.createReadStream();
+		p_render.encoder = new GIFEncoder(p_render.canvas.width, p_render.canvas.height, 'octree');
+		p_render.stream = p_render.encoder.createReadStream();
 
 		// Configure gif encoding
 		p_render.encoder.start();
@@ -49,11 +50,11 @@ module.exports = {
 		
 		// Getting the required game data json file
 		let gamedata = require('../gamedata/game.json');
-		
+		p_root.gamedata = gamedata;
 		
 		// Start with empty canvas.
 		p_render.ctx.fillStyle = "#ffffff";
-		p_render.ctx.fillRect(0, 0, canvas.width, canvas.height);
+		p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
 		
 		// Set some font settings
 		p_render.ctx.font = "13px Electrolize";
@@ -66,17 +67,30 @@ module.exports = {
 		// Every function will try to cancel out the interactionDone variable.
 		// When that is done the gif has finished rendering.
 		// -------------
-		while(!gamedata.render.interactionDone){
-			vars.player[interaction.user.id].render.interactionDone = true
-			renderTextBalloon.renderTextBalloon(canvas, ctx, encoder, gamedata.gameplay[interaction_id]);
+		while(!p_render.interactionDone){
+			p_render.interactionDone = false
+			p_render.frame++;
 			
-			encoder.addFrame(ctx);
+			await renderTextBalloon.renderTextBalloon(interaction);
+			
+			// Anti infinite loop
+			if(p_render.frame == 128){
+				p_render.interactionDone = true;
+				if(p_root.message) p_root.message.channel.send("Warning: Infinite loop protection trigger, please check your code.");
+				console.log("Warning: Infinite loop protection trigger, please check your code.");
+			}	
+			
+			
+			p_render.encoder.addFrame(p_render.ctx);
 		}
 
-
+		// Reset game loop variables
+		p_render.interactionDone = false
+		p_render.frame = -1;
+		
 		 
 		// Tell the gif encoder that all the frames has been rendered.
-		vars.player[interaction.user.id].render.encoder.finish();
+		p_render.encoder.finish();
 		
 		// Increese interaction ID
 		vars.player[interaction.user.id].interaction++;
@@ -90,11 +104,11 @@ module.exports = {
 
 		
 		
-		for(var i = 0; i <= gamedata.gameplay[item].interactbutton.length; i++){
+		//for(var i = 0; i <= gamedata.gameplay[item].interactbutton.length; i++){
 			//TODO: Make the buttons
 		
 		
-		}
+	//	}
 		
 		// TODO: Implement and change to the for loop above.
 		if(vars.player[interaction.user.id].interaction == 3){
