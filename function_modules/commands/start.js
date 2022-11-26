@@ -27,6 +27,7 @@ module.exports = {
 			vars.player[interaction.user.id].render.interactionDone = false;
 			vars.player[interaction.user.id].render.frame = -1; 
 			vars.player[interaction.user.id].gamedata = null;
+			vars.player[interaction.user.id].render.working = false;
 			
 		} else {
 			await interaction.reply("There is already a game session started.");

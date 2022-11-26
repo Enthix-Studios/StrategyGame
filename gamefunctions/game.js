@@ -15,7 +15,10 @@ const Discord = imports.Discord;
 module.exports = {
 	
 	run: async function(interaction){
-	
+		
+		console.log(vars.player[interaction.user.id].render.working);
+		
+		
 		// Check if interaction needs to send an deferUpdate.
 		if(interaction.isCommand()){
 			await interaction.reply({ content: "<a:Loading:1046076563407519784> **Loading game, Please wait...**"});
@@ -23,7 +26,12 @@ module.exports = {
 			const message = await interaction.fetchReply();
 			vars.player[interaction.user.id].message = message;
 		} else if(interaction.isButton() || interaction.isModalSubmit()) interaction.deferUpdate();
-
+		
+		
+		if(vars.player[interaction.user.id].render.working) return;
+		vars.player[interaction.user.id].render.working = true;
+		
+		
 		// Making message objects for embeds and button row
 		var playEmbed = new Discord.EmbedBuilder();
 		var playEmbedRow = new Discord.ActionRowBuilder();
@@ -139,9 +147,9 @@ module.exports = {
 		}
 		
 	
-
-		vars.player[interaction.user.id].message.edit({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
 		
+		await vars.player[interaction.user.id].message.edit({ content: "", embeds: [playEmbed], components: [playEmbedRow], files: [attachment] });
+		vars.player[interaction.user.id].render.working = false;
 		
 		
 	}
