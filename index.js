@@ -13,7 +13,6 @@ const { Routes } = require('discord-api-types/v9');
 const fs = require("fs");
 const path = require("path");
 
-
 // Configuring Discord Token
 require('dotenv').config();
 const TOKEN = process.env.TOKEN;
@@ -118,6 +117,7 @@ var cleanup = require('./cleanup').Cleanup(myCleanup);
 function myCleanup() {
 	console.log('Spoonful Bot Has Exited....');
 };
+
 
 
 
