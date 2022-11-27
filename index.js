@@ -92,7 +92,7 @@ fs.readdirSync(EventsNormalizedPath).forEach(function (file) {
 
 
 // Push all commands to commandlist.
-rest.put(Routes.applicationCommands("1042160078586925106"), { body: command_list }).then(() => console.log('Successfully registered application commands.')).catch(console.error);
+//rest.put(Routes.applicationCommands("1042160078586925106"), { body: command_list }).then(() => console.log('Successfully registered application commands.')).catch(console.error);
 
 
 // Make a connection to the database.

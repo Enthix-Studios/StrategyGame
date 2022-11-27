@@ -28,7 +28,7 @@ module.exports = {
 			vars.player[interaction.user.id].message = message;
 		} else if(interaction.isButton() || interaction.isModalSubmit()){
 			console.log("deferUpdate");
-			interaction.deferUpdate();
+			//interaction.deferUpdate();
 		}
 		
 		if(vars.player[interaction.user.id].render.working) return;
@@ -83,17 +83,17 @@ module.exports = {
 		while(!p_render.interactionDone){
 			p_render.interactionDone = false
 			p_render.frame++;
-			console.log(p_render.frame);
+			
 			
 			// Start with empty canvas.
 			p_render.ctx.fillStyle = "#ffffff";
 			p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
 			
-			console.log("a");
-			await renderBackground.render(interaction);
-			console.log("b");
+
+			//await renderBackground.render(interaction);
+
 			await renderTextBalloon.renderTextBalloon(interaction);
-			console.log("c");
+
 			
 			// Anti infinite loop
 			if(p_render.frame == 128){
@@ -163,6 +163,9 @@ module.exports = {
 		}
 		vars.player[interaction.user.id].render.working = false;
 		
+		
+		console.log(vars.player[interaction.user.id].websocket);
+		if(vars.player[interaction.user.id].websocket !== null) vars.player[interaction.user.id].websocket.send("1");
 		
 	}
 
