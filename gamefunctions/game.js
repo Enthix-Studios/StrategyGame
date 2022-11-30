@@ -80,6 +80,7 @@ module.exports = {
 		// Every function will try to cancel out the interactionDone variable.
 		// When that is done the gif has finished rendering.
 		// -------------
+		const t0 = performance.now()
 		while(!p_render.interactionDone){
 			p_render.interactionDone = false
 			p_render.frame++;
@@ -105,7 +106,8 @@ module.exports = {
 			
 			p_render.encoder.addFrame(p_render.ctx);
 		}
-
+		
+		
 		// Reset game loop variables
 		p_render.interactionDone = false
 		p_render.frame = -1;
@@ -117,6 +119,9 @@ module.exports = {
 		// Increese interaction ID
 		vars.player[interaction.user.id].interaction++;
 		
+		
+		const t1 = performance.now()
+		p_root.message.channel.send("Performance: " + (t1 - t0));
 		
 		// Make attachment for embed.
 		const attachment = new Discord.AttachmentBuilder(vars.player[interaction.user.id].render.stream, { name: 'game.gif' });
