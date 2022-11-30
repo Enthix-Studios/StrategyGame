@@ -46,18 +46,19 @@ module.exports = {
 				p_render.ctx.fillStyle = "#a1aec7";
 				p_render.ctx.fillText(textFormatting.textFormatting(data.textballoon_text, p_root).toString().slice(0, frame_offset), 199, 208);
 				
-				if(data.textballoon_text.length == frame_offset){
-					// Add text done symbol at the last frame.
-					p_render.ctx.drawImage(img_textdone, p_render.canvas.width - 22, p_render.canvas.height - 22); 
-					p_render.interactionDone = true;
-				} else {
-					p_render.interactionDone = false;
-				}
+				
 				
 				
 				
 				// TODO: Make fadeout function.
 
+			}
+			if(data.textballoon_text.length == frame_offset){
+				// Add text done symbol at the last frame.
+				p_render.ctx.drawImage(img_textdone, p_render.canvas.width - 22, p_render.canvas.height - 22); 
+				p_render.interactionDone = true;
+			} else {
+				p_render.interactionDone = false;
 			}
 			
 		}

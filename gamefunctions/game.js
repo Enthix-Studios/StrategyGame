@@ -90,8 +90,7 @@ module.exports = {
 			p_render.ctx.fillRect(0, 0, p_render.canvas.width, p_render.canvas.height);
 			
 
-			//await renderBackground.render(interaction);
-
+			await renderBackground.render(interaction);
 			await renderTextBalloon.renderTextBalloon(interaction);
 
 			
