@@ -1,4 +1,4 @@
-const Discord = require('discord.js')
+const Discord = require("discord.js");
 const ws = require("ws");
 
 module.exports = {
@@ -7,5 +7,4 @@ module.exports = {
 	wss: new ws.Server({ port: 30000 }),
 	ModuleImports: new Map(),
 	ModuleType: new Map(),
-}
-
+};

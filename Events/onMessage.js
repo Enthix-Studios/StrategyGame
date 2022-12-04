@@ -1,9 +1,9 @@
-const imports = require('../imports');
-const Discord = require('discord.js');
-const globalVars = require('../globalvars');
+const imports = require("../imports");
+const Discord = require("discord.js");
+const globalVars = require("../globalvars");
 const fs = require("fs");
 
-imports.bot.on('messageCreate', async msg => {
+imports.bot.on("messageCreate", async msg => {
 	/*
 	
 	//if(msg.author.bot) return;
@@ -152,7 +152,6 @@ imports.bot.on('messageCreate', async msg => {
 			}
 		}
 	}*/
-
 	/* ----------
 	Message Listener
 	---------- */
@@ -170,5 +169,4 @@ imports.bot.on('messageCreate', async msg => {
 			}
 		}
 	}*/
-
 });
