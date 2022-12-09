@@ -9,9 +9,17 @@ import { Client, GatewayIntentBits as Intents } from "discord.js";
 
 const client = new Client({ intents: [Intents.Guilds] });
 
-import { registerEvents, getCommands, registerCommands } from "./register";
+import {
+	registerEvents,
+	getCommands,
+	registerCommands,
+	registerButtons,
+} from "./register";
 
 registerEvents(client);
-getCommands().then(commands => registerCommands(client, commands));
+getCommands().then(commands => {
+	registerCommands(client, commands);
+	registerButtons(client);
+});
 
 client.login(token);

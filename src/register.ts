@@ -3,6 +3,7 @@ import {
 	CommandInteraction,
 	SlashCommandBuilder,
 	Routes,
+	ButtonInteraction,
 } from "discord.js";
 
 import { resolve } from "node:path";
@@ -12,6 +13,7 @@ import { once } from "node:events";
 
 const eventsPath = resolve(__dirname, "events");
 const commandsPath = resolve(__dirname, "commands");
+const buttonsPath = resolve(__dirname, "buttons");
 
 export async function registerEvents(client: Client) {
 	const entries = await readdir(eventsPath);
@@ -76,5 +78,41 @@ export async function registerCommands(client: Client, commands: command[]) {
 		}
 	});
 
-	console.log("Attached listeners!");
+	console.log("Attached command listeners!");
+}
+
+interface button {
+	id: string;
+	execute: (
+		interaction: ButtonInteraction,
+	) => Promise<any | void> | any | void;
+}
+
+export async function registerButtons(client: Client) {
+	const entries = await readdir(buttonsPath);
+	let buttons: button[] = [];
+
+	for (const entry of entries) {
+		const { id, execute } = await import(resolve(buttonsPath, entry));
+		buttons.push({ id, execute });
+	}
+
+	// Command handler
+	client.on("interactionCreate", async interaction => {
+		if (!interaction.isButton()) return;
+
+		const button = buttons.find(
+			button => button.id == interaction.customId,
+		);
+
+		if (!button) return;
+
+		try {
+			button.execute(interaction);
+		} catch (error) {
+			console.error(error);
+		}
+	});
+
+	console.log("Attached button listeners!");
 }
