@@ -107,6 +107,7 @@ export async function registerInteractions(client: Client) {
 		);
 
 		if (!module) return;
+		if (!module.shouldRun(interaction)) return;
 
 		try {
 			module.execute(interaction);
