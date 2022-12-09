@@ -1,0 +1,23 @@
+{
+	"name": "strategy-game",
+	"version": "0.1.0",
+	"description": "A Discord strategy game",
+	"main": "dist/",
+	"author": "null",
+	"license": "AGPL-3.0",
+	"private": false,
+	"scripts": {
+		"start": "tsc && node .",
+		"dev": "nodemon -e ts --exec yarn start",
+		"fmt": "prettier --write ."
+	},
+	"dependencies": {
+		"discord.js": "^14.7.1",
+		"dotenv": "^16.0.3"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.20",
+		"prettier": "^2.8.1",
+		"typescript": "^4.9.4"
+	}
+}
