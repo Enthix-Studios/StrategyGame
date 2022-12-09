@@ -3,7 +3,7 @@ import {
 	CommandInteraction,
 	SlashCommandBuilder,
 	Routes,
-	ButtonInteraction,
+	Interaction,
 } from "discord.js";
 
 import { resolve } from "node:path";
@@ -81,34 +81,35 @@ export async function registerCommands(client: Client, commands: command[]) {
 	console.log("Attached command listeners!");
 }
 
-interface button {
+interface module {
 	id: string;
-	execute: (
-		interaction: ButtonInteraction,
-	) => Promise<any | void> | any | void;
+	shouldRun: (interaction: Interaction) => boolean;
+	execute: (interaction: Interaction) => Promise<any | void> | any | void;
 }
 
-export async function registerButtons(client: Client) {
+export async function registerInteractions(client: Client) {
 	const entries = await readdir(buttonsPath);
-	let buttons: button[] = [];
+	let modules: module[] = [];
 
 	for (const entry of entries) {
-		const { id, execute } = await import(resolve(buttonsPath, entry));
-		buttons.push({ id, execute });
+		const { id, shouldRun, execute } = await import(
+			resolve(buttonsPath, entry)
+		);
+		modules.push({ id, shouldRun, execute });
 	}
 
 	// Command handler
 	client.on("interactionCreate", async interaction => {
-		if (!interaction.isButton()) return;
+		if (!("customId" in interaction)) return;
 
-		const button = buttons.find(
-			button => button.id == interaction.customId,
+		const module = modules.find(
+			module => module.id == interaction.customId,
 		);
 
-		if (!button) return;
+		if (!module) return;
 
 		try {
-			button.execute(interaction);
+			module.execute(interaction);
 		} catch (error) {
 			console.error(error);
 		}

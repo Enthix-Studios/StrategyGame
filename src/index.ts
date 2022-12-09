@@ -13,13 +13,13 @@ import {
 	registerEvents,
 	getCommands,
 	registerCommands,
-	registerButtons,
+	registerInteractions,
 } from "./register";
 
 registerEvents(client);
 getCommands().then(commands => {
 	registerCommands(client, commands);
-	registerButtons(client);
+	registerInteractions(client);
 });
 
 client.login(token);
