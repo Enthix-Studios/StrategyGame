@@ -1,8 +1,11 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_draw_information",
-  "spriteId": null,
+  "name": "obj_loading",
+  "spriteId": {
+    "name": "spr_loading_generic",
+    "path": "sprites/spr_loading_generic/spr_loading_generic.yy",
+  },
   "solid": false,
   "visible": true,
   "managed": true,
@@ -21,9 +24,7 @@
   "physicsStartAwake": true,
   "physicsKinematic": false,
   "physicsShapePoints": [],
-  "eventList": [
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","isDnD":false,"eventNum":0,"eventType":8,"collisionObjectId":null,},
-  ],
+  "eventList": [],
   "properties": [],
   "overriddenProperties": [],
   "parent": {

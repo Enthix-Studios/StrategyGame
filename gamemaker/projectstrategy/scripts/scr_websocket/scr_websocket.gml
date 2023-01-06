@@ -1,15 +1,17 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+// Config
+//network_set_config(network_config_use_non_blocking_socket, 1);
+network_set_config(network_config_connect_timeout, 5000);
+
+//socket
+global.socket = network_create_socket(network_socket_ws);
 
 
-var socket = network_create_socket(network_socket_ws);
-network_connect_raw(socket , "enthix.net", 30001);
+// Send data to socket.
+function fn_websocket_send(value){
+	var buffer_size = buffer_get_size(value);
+	var buff = buffer_create(buffer_size, buffer_fixed, 0)
+	buffer_write(buff, buffer_text, value)
+	network_send_raw(global.socket, buff, buffer_tell(buff))
 
-var buff = buffer_create(11, buffer_fixed, 1)
-buffer_write(buff, buffer_text, "Hello world")
-network_send_raw(socket, buff, buffer_tell(buff))
-
-
-function scr_websocket(){
-
+	
 }
