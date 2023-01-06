@@ -1,7 +1,7 @@
 {
   "resourceType": "GMRoom",
   "resourceVersion": "1.0",
-  "name": "rm_gamelogo",
+  "name": "rm_menu",
   "isDnd": false,
   "volume": 1.0,
   "parentRoom": null,
@@ -32,10 +32,10 @@
   "creationCodeFile": "",
   "inheritCode": false,
   "instanceCreationOrder": [
-    {"name":"inst_7AFD5F8C","path":"rooms/rm_gamelogo/rm_gamelogo.yy",},
-    {"name":"inst_2A7B4810","path":"rooms/rm_gamelogo/rm_gamelogo.yy",},
-    {"name":"inst_1756C12A","path":"rooms/rm_gamelogo/rm_gamelogo.yy",},
-    {"name":"inst_49A7F224","path":"rooms/rm_gamelogo/rm_gamelogo.yy",},
+    {"name":"inst_7AFD5F8C","path":"rooms/rm_menu/rm_menu.yy",},
+    {"name":"inst_2A7B4810","path":"rooms/rm_menu/rm_menu.yy",},
+    {"name":"inst_1756C12A","path":"rooms/rm_menu/rm_menu.yy",},
+    {"name":"inst_49A7F224","path":"rooms/rm_menu/rm_menu.yy",},
   ],
   "inheritCreationOrder": false,
   "sequenceId": null,
@@ -59,7 +59,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "Logo into",
-    "path": "folders/Rooms/Logo into.yy",
+    "name": "projectstrategy",
+    "path": "projectstrategy.yyp",
   },
 }

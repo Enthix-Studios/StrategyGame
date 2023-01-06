@@ -47,6 +47,6 @@ while ((v_fadeout < 100)) {
 /// @DnDAction : YoYo Games.Rooms.Go_To_Room
 /// @DnDVersion : 1
 /// @DnDHash : 0CA6B0FF
-/// @DnDArgument : "room" "rm_gamelogo"
-/// @DnDSaveInfo : "room" "rm_gamelogo"
-room_goto(rm_gamelogo);
+/// @DnDArgument : "room" "rm_menu"
+/// @DnDSaveInfo : "room" "rm_menu"
+room_goto(rm_menu);
