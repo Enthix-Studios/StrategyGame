@@ -4,4 +4,4 @@ global.serverSocket = "wss://enthix.net"
 global.debugMode = true;
 
 // Change values below for testing
-global.serverSocketDebug = "wss://enthix.net"
+global.serverSocketDebug = "ws://192.168.3.18"
