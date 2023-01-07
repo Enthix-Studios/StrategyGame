@@ -59,7 +59,7 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "projectstrategy",
-    "path": "projectstrategy.yyp",
+    "name": "Rooms",
+    "path": "folders/Rooms.yy",
   },
 }

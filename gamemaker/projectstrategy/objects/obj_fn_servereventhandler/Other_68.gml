@@ -6,4 +6,14 @@ if(buffer_raw != undefined){
 	var data = realData[?"data"];
 	show_debug_message(event);
 	show_debug_message(data);
+	
+	
+	
+	switch(event){
+			case "LOGIN_TOKEN_REFRESH": {
+				global.login_token = data;	
+				show_debug_message("put token global");
+			}
+		
+	}
 }

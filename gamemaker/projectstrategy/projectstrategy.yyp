@@ -14,7 +14,7 @@
     {"id":{"name":"spr_loading_bg","path":"sprites/spr_loading_bg/spr_loading_bg.yy",},"order":7,},
     {"id":{"name":"obj_loading_bg","path":"objects/obj_loading_bg/obj_loading_bg.yy",},"order":5,},
     {"id":{"name":"spr_loading_generic","path":"sprites/spr_loading_generic/spr_loading_generic.yy",},"order":6,},
-    {"id":{"name":"rm_menu","path":"rooms/rm_menu/rm_menu.yy",},"order":6,},
+    {"id":{"name":"rm_menu","path":"rooms/rm_menu/rm_menu.yy",},"order":1,},
     {"id":{"name":"spr_btn_loginwithmeid","path":"sprites/spr_btn_loginwithmeid/spr_btn_loginwithmeid.yy",},"order":0,},
     {"id":{"name":"spr_logo_mvdw","path":"sprites/spr_logo_mvdw/spr_logo_mvdw.yy",},"order":0,},
     {"id":{"name":"obj_fn_loginscreen","path":"objects/obj_fn_loginscreen/obj_fn_loginscreen.yy",},"order":2,},
@@ -22,7 +22,7 @@
     {"id":{"name":"obj_fn_draw_information","path":"objects/obj_fn_draw_information/obj_fn_draw_information.yy",},"order":1,},
     {"id":{"name":"scr_localstorage","path":"scripts/scr_localstorage/scr_localstorage.yy",},"order":2,},
     {"id":{"name":"fnt_manrope","path":"fonts/fnt_manrope/fnt_manrope.yy",},"order":0,},
-    {"id":{"name":"rm_mvdw","path":"rooms/rm_mvdw/rm_mvdw.yy",},"order":1,},
+    {"id":{"name":"rm_mvdw","path":"rooms/rm_mvdw/rm_mvdw.yy",},"order":0,},
   ],
   "Options": [
     {"name":"Windows","path":"options/windows/options_windows.yy",},

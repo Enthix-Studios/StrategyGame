@@ -1,4 +1,5 @@
-network_connect_raw_async(global.socket , global.serverSocketDebug, 30000);
+
+network_connect_raw(global.socket , global.serverSocket, 30001);
 
 //TODO: Check if token exist in local storage
-fn_websocket_send("login_token_request","");
+fn_websocket_send("LOGIN_TOKEN_REQUEST","");
