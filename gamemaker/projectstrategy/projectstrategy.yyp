@@ -3,6 +3,7 @@
   "resourceVersion": "1.6",
   "name": "projectstrategy",
   "resources": [
+    {"id":{"name":"obj_fn_servereventhandler","path":"objects/obj_fn_servereventhandler/obj_fn_servereventhandler.yy",},"order":3,},
     {"id":{"name":"obj_btn_loginwithmeid","path":"objects/obj_btn_loginwithmeid/obj_btn_loginwithmeid.yy",},"order":2,},
     {"id":{"name":"scr_gamesettings","path":"scripts/scr_gamesettings/scr_gamesettings.yy",},"order":0,},
     {"id":{"name":"obj_loading","path":"objects/obj_loading/obj_loading.yy",},"order":4,},
