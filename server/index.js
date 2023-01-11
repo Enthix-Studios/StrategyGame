@@ -1,6 +1,11 @@
 const imports = require("./imports");
 const mysql = require('mysql-await');
 const crypto = require('crypto');
+const http = require("http");
+
+//Webserver
+const server = http.createServer(requestListener);
+
 
 // Mysql connect to server
 var con = mysql.createConnection({
@@ -10,6 +15,7 @@ var con = mysql.createConnection({
 	database: "strategy"
 });
 
+var open_connections = new Map();
 
 
 // websocket connection event
@@ -45,6 +51,31 @@ imports.wss.on("connection", ws => {
 });
 
 
+server.listen(25555, "localhost", () => {
+	console.log("Server is running");
+});
+
+function requestListener (req, res) {
+	res.writeHead(200);
+	
+	let url = req.url
+    	let method = req.method
+    	var ws =  open_connections.get(url.replace("/", ""));
+    	
+    	
+    	if(typeof ws === "undefined"){
+    		res.end("TOKEN NOT FOUND");
+    	
+    	} else {
+    		console.log(ws);
+    		send(ws, "AUTH", "OK");
+    	}
+    	
+    	
+};
+
+
+
 async function event_handler(ws, event, data){
 	console.log("event: " + event);
 	console.log("data: " + data);
@@ -52,7 +83,7 @@ async function event_handler(ws, event, data){
 		case "LOGIN_TOKEN_REQUEST": {
 			var token = await logintoken_generate();
 			send(ws, "LOGIN_TOKEN_REFRESH", token);
-		
+			open_connections.set(token, ws);
 		}
 	
 	}
@@ -105,6 +136,18 @@ function send(ws, event, data){
 	console.log(message);
 
 }
+setInterval(() => {
+	open_connections.forEach(log_openconnections);
+	console.log("Log open connections");
+	
+
+}, 5000);
+
+function log_openconnections(value, key, map) {
+	console.log(`map.get('${key}') = ${value}`);
+	send(value, "test", "123")
+}
+
 
 console.log("The WebSocket server is running");
 
