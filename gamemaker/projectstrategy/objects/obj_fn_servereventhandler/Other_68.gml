@@ -13,6 +13,12 @@ if(buffer_raw != undefined){
 			case "LOGIN_TOKEN_REFRESH": {
 				global.login_token = data;	
 				show_debug_message("put token global");
+				break;
+			}
+			case "AUTH": {
+					global.username = "NULL";
+					
+					
 			}
 		
 	}
