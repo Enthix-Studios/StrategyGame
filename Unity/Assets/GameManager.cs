@@ -12,10 +12,14 @@ public class GameManager : MonoBehaviour {
     private WebSocket websocket;
 
 
-    public static GameManager Instance {
+    private static GameManager Instance {
         get { return instance; }
     }
 
+	private GameManager(){
+		Debug.Log("TEST TEST 1234");
+		Start();
+	}
     
 	async void Start() { 
 		
@@ -63,11 +67,10 @@ public class GameManager : MonoBehaviour {
 		};
 
 		// Sending heartbeat to EGS to keep connection alive.
-		InvokeRepeating("SendHeartBeat", 0.0f, 5.0f);
+		//InvokeRepeating("SendHeartBeat", 0.0f, 5.0f);
 
 		await websocket.Connect();
 
-        DontDestroyOnLoad(gameObject);
 	}
 
 
@@ -77,7 +80,7 @@ public class GameManager : MonoBehaviour {
 		websocket.DispatchMessageQueue();
 		//#endif
 	}
-
+ 
 
 	async void SendHeartBeat() {
 		if (websocket.State == WebSocketState.Open) {
