@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Character : MonoBehaviour
 {
@@ -50,7 +51,11 @@ public class Character : MonoBehaviour
         
         var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
         var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref currentVelocity, smoothTime);
-        transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+        if ((direction.x !=0) || (direction.z != 0))
+        {
+            transform.rotation = Quaternion.Euler(0.0f, angle, 0.0f);
+        }
+        
     }
 
     private void ApplyMovement()
