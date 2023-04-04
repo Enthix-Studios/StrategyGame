@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqb6mfiy6epru"]
+
+[ext_resource type="Script" path="res://Scripts/Connection/MeID-button.gd" id="1_8kjl2"]
+[ext_resource type="VideoStream" path="res://Video/main_bg.ogv" id="2_oc3rg"]
+[ext_resource type="Script" path="res://Scripts/media/loop_video.gd" id="3_t564s"]
+[ext_resource type="AudioStream" uid="uid://cehigsxovw3lx" path="res://Audio/ThemeShort.mp3" id="4_oujpb"]
+[ext_resource type="Texture2D" uid="uid://raidjbewmx5p" path="res://Image/UI/login with meid_64.png" id="5_vyr2p"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -577.0
+offset_top = -324.0
+offset_right = 577.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+ratio = 1.7778
+stretch_mode = 3
+alignment_vertical = 2
+
+[node name="Background" type="VideoStreamPlayer" parent="AspectRatioContainer"]
+layout_mode = 2
+stream = ExtResource("2_oc3rg")
+autoplay = true
+expand = true
+script = ExtResource("3_t564s")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oujpb")
+autoplay = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -129.5
+offset_top = -120.0
+offset_right = 129.5
+offset_bottom = -43.0
+grow_horizontal = 2
+grow_vertical = 0
+icon = ExtResource("5_vyr2p")
+flat = true
+script = ExtResource("1_8kjl2")
+
+[connection signal="finished" from="AspectRatioContainer/Background" to="AspectRatioContainer/Background" method="_on_finished"]
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]

@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d2trd5q4sdid7"]
+
+[ext_resource type="FontFile" uid="uid://dwhvsmbyr4onm" path="res://Fonts/Manrope-Medium.ttf" id="1_lj8hv"]
+
+[resource]
+default_font = ExtResource("1_lj8hv")
+Button/fonts/font = ExtResource("1_lj8hv")

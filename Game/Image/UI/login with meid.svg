@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="179.075mm"
+   height="45.844002mm"
+   viewBox="0 0 179.075 45.844003"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5, 2022-02-04)"
+   sodipodi:docname="login with meid.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="mm"
+     width="179.075mm"
+     inkscape:zoom="0.733172"
+     inkscape:cx="325.29884"
+     inkscape:cy="289.83649"
+     inkscape:window-width="1920"
+     inkscape:window-height="996"
+     inkscape:window-x="1920"
+     inkscape:window-y="1480"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient18681">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1"
+         offset="0"
+         id="stop18677" />
+      <stop
+         style="stop-color:#3373da;stop-opacity:1"
+         offset="0.06569897"
+         id="stop18683" />
+      <stop
+         style="stop-color:#ed305d;stop-opacity:1"
+         offset="1"
+         id="stop18679" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4698">
+      <stop
+         style="stop-color:#3373da;stop-opacity:1"
+         offset="0"
+         id="stop4694" />
+      <stop
+         style="stop-color:#ed305d;stop-opacity:1"
+         offset="1"
+         id="stop4696" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4698"
+       id="linearGradient4700"
+       x1="45.22731"
+       y1="76.266068"
+       x2="82.874146"
+       y2="76.322281"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4698"
+       id="linearGradient8741"
+       x1="45.231075"
+       y1="75.970688"
+       x2="82.918381"
+       y2="76.126282"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-39.206947,-53.25436)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4698"
+       id="linearGradient8884"
+       x1="45.335854"
+       y1="76.259979"
+       x2="82.762779"
+       y2="76.259979"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-39.206947,-53.25436)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient18681"
+       id="linearGradient11894"
+       x1="150.44553"
+       y1="72.072281"
+       x2="177.61749"
+       y2="72.337669"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.612897,0,0,1.612897,-113.16678,-92.566901)" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:7.49498;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.980392;paint-order:fill markers stroke"
+       id="rect846"
+       width="179.07491"
+       height="45.843678"
+       x="0"
+       y="-7.1054274e-15"
+       ry="22.921839" />
+    <circle
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient8741);stroke-width:3.175;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path1006"
+       cx="22.131607"
+       cy="22.716328"
+       r="14.519979" />
+    <g
+       id="g1598"
+       transform="matrix(0.9549547,0,0,0.929961,-36.76146,-48.107655)"
+       style="stroke-width:3.36915;stroke-miterlimit:4;stroke-dasharray:none">
+      <path
+         style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:url(#linearGradient4700);stroke-width:3.36915;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="path1006-7"
+         sodipodi:type="arc"
+         sodipodi:cx="61.304234"
+         sodipodi:cy="76.137238"
+         sodipodi:rx="20.072357"
+         sodipodi:ry="20.072355"
+         sodipodi:start="4.7139487"
+         sodipodi:end="1.5692167"
+         sodipodi:arc-type="arc"
+         d="M 61.335541,56.064907 A 20.072357,20.072355 0 0 1 81.376591,76.137038 20.072357,20.072355 0 0 1 61.33594,96.209568"
+         sodipodi:open="true" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20.0094px;line-height:1.25;font-family:Manrope;-inkscape-font-specification:'Manrope, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient8884);fill-opacity:1;stroke:none;stroke-width:3.175;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       x="12.848835"
+       y="30.091938"
+       id="text2240"><tspan
+         sodipodi:role="line"
+         id="tspan2238"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20.0094px;font-family:Manrope;-inkscape-font-specification:'Manrope, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:url(#linearGradient8884);fill-opacity:1;stroke:none;stroke-width:3.175;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         x="12.848835"
+         y="30.091938">ID</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:17.0697px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:url(#linearGradient11894);fill-opacity:1;stroke:none;stroke-width:0.426746"
+       x="48.591766"
+       y="28.117716"
+       id="text9740"
+       transform="scale(0.98447861,1.0157661)"><tspan
+         sodipodi:role="line"
+         id="tspan9738"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.0697px;font-family:Manrope;-inkscape-font-specification:'Manrope, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:url(#linearGradient11894);fill-opacity:1;stroke-width:0.426746"
+         x="48.591766"
+         y="28.117716">Login with <tspan
+   style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.0697px;font-family:Manrope;-inkscape-font-specification:'Manrope, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:url(#linearGradient11894);fill-opacity:1;stroke-width:0.426746"
+   id="tspan11644">MeID</tspan></tspan></text>
+  </g>
+</svg>
