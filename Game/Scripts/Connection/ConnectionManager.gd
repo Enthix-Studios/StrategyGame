@@ -3,10 +3,10 @@ extends Node
 var websocket_url = "ws://enthix.net:30001"
 
 @export var SERVER_AUTH_TOKEN = "NONE"
-
+@export var SERVER_CONNECTION_STATE = 0
 
 var socket = WebSocketPeer.new()
-var connection_state = 0
+
 
 
 func _ready():
@@ -42,16 +42,17 @@ func _processJsonFormat(json_string):
 
 	
 func _connectionHandleSetup():
-	if connection_state == 0:
+	if SERVER_CONNECTION_STATE == 0:
 		socket.send_text('{ "event": "LOGIN_TOKEN_REQUEST", "data": null }');
-		connection_state = 1
+		SERVER_CONNECTION_STATE = 1
 		
 func _connectionHandleEvents(event, data):
 	match(event):
 		"LOGIN_TOKEN_REFRESH":
 			SERVER_AUTH_TOKEN = data
-			
+			SERVER_CONNECTION_STATE = 2
 		"AUTH":
 			if data == "OK":
+				SERVER_CONNECTION_STATE = 3
 				print("Client has been logged in.")
 	pass
