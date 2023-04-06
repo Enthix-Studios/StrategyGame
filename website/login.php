@@ -31,8 +31,9 @@
 		$meid_api_raw_data = curl_exec($ch);
 		$meid_api_data = json_decode($meid_api_raw_data);
 		$info = curl_getinfo($ch);
-		
-		$server_api = "http://localhost:25555/" . $_COOKIE["strategy_logintoken"];
+
+		$login_token = preg_replace('/[[:^print:]]/', '', $_COOKIE["strategy_logintoken"]);
+		$server_api = "http://localhost:25555/" . $login_token;
 
 		
 		curl_setopt($ch2, CURLOPT_URL, $server_api);
