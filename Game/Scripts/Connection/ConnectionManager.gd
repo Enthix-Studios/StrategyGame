@@ -9,8 +9,6 @@ var socket = WebSocketPeer.new()
 var connection_state = 0
 
 
-
-
 func _ready():
 	print_debug("Connecting to ", websocket_url)
 	socket.connect_to_url(websocket_url)
@@ -52,6 +50,7 @@ func _connectionHandleEvents(event, data):
 	match(event):
 		"LOGIN_TOKEN_REFRESH":
 			SERVER_AUTH_TOKEN = data
+			
 		"AUTH":
 			if data == "OK":
 				print("Client has been logged in.")

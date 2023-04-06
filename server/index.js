@@ -58,19 +58,20 @@ server.listen(25555, "localhost", () => {
 function requestListener (req, res) {
 	res.writeHead(200);
 	
-	let url = req.url
-    	let method = req.method
-    	var ws =  open_connections.get(url.replace("/", ""));
-    	
-    	
-    	if(typeof ws === "undefined"){
-    		res.end("TOKEN NOT FOUND");
-    	
-    	} else {
-    		console.log(ws);
-    		send(ws, "AUTH", "OK");
-    	}
-    	
+	let url = req.url;
+	let method = req.method;
+	var ws =  open_connections.get(url.replace("/", ""));
+	
+	
+	if(typeof ws === "undefined"){
+		res.write("TOKEN NOT FOUND");
+	
+	} else {
+		console.log(ws);
+		send(ws, "AUTH", "OK");
+		res.write("OK");
+    }
+	res.end();
     	
 };
 
