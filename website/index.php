@@ -1,3 +1,15 @@
-<html>
-<h1>Project Strategy Official site.</h1>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title>Strategy Game Official Website</title>
+
+	</head>
+	<body>
+        
+        <h1>Strategy Game Official Website</h1>
+
+	</body>
 </html>
