@@ -4,8 +4,8 @@
 	$page_title_name = "NONE";
 	$page_description = "NONE";
 	
-	if(isset($_GET["token"])){
-		if(ctype_xdigit($_GET["token"]) || strlen($_GET["token"]) == 32){
+	if (isset($_GET["token"])) {
+		if (ctype_xdigit($_GET["token"]) || strlen($_GET["token"]) == 32) {
 			setcookie("strategy_logintoken", $_GET["token"], time()+3600);
 		
 			header("Location: https://www.enthix.net/meid/oauth/index.php?client_id=3242323523556224");
@@ -15,10 +15,10 @@
 		
 		$page_title_name = "Error: Invailid Request";
 		$page_title_color = 1;
-		$page_description = "There was an issue while trying to communicate with the server, please update your game client if possible.";
+		$page_description = "There was an issue while trying to communicate with the server.";
 	
 
-	} else if(isset($_GET["access_code"]) && isset($_GET["expiry"]) && isset($_GET["user_id"])){
+	} else if (isset($_GET["access_code"]) && isset($_GET["expiry"]) && isset($_GET["user_id"])) {
 	
 	
 		$ch = curl_init();
@@ -41,7 +41,7 @@
 		curl_exec($ch2);
 
 
-		if($info['http_code'] !== 200) {
+		if ($info['http_code'] !== 200) {
 			
 			$page_title_name = "Error: Failed to login";
 			$page_title_color = 1;
@@ -58,7 +58,7 @@
 	}
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="utf8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -67,8 +67,11 @@
 		<style>
 			h1{
 				<?php
-					if($page_title_color == 0) echo "background: linear-gradient(#00FFB7, #f440);";
-					else echo "background: linear-gradient(#f44f, #f440);";
+					if ($page_title_color == 0) {
+						echo "background: linear-gradient(#00FFB7, #f440);";
+					} else {
+						echo "background: linear-gradient(#f44f, #f440);";
+					} 
 				?>
 				-webkit-background-clip: text;
 			}
