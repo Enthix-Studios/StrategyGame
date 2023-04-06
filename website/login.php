@@ -1,17 +1,24 @@
 <?php
-	if(isset($_GET["token"])){
-		if(!ctype_xdigit($_GET["token"]) || strlen($_GET["token"]) !== 32){
-			include_once("./error/game_error/INVALID_TOKEN_FORMAT.html");
-			return;
+	
+	$page_title_color = 0;
+	$page_title_name = "NONE";
+	$page_description = "NONE";
+	
+	if (isset($_GET["token"])) {
+		if (ctype_xdigit($_GET["token"]) || strlen($_GET["token"]) == 32) {
+			setcookie("strategy_logintoken", $_GET["token"], time()+3600);
+		
+			header("Location: https://www.enthix.net/meid/oauth/index.php?client_id=3242323523556224");
+			exit;
 		}
 		
-		setcookie("strategy_logintoken", $_GET["token"], time()+3600);
 		
-		header("Location: https://www.enthix.net/meid/oauth/index.php?client_id=3242323523556224");
-		
-		
+		$page_title_name = "Error: Invailid Request";
+		$page_title_color = 1;
+		$page_description = "There was an issue while trying to communicate with the server.";
+	
 
-	} else if(isset($_GET["access_code"]) && isset($_GET["expiry"]) && isset($_GET["user_id"])){
+	} else if (isset($_GET["access_code"]) && isset($_GET["expiry"]) && isset($_GET["user_id"])) {
 	
 	
 		$ch = curl_init();
@@ -26,26 +33,62 @@
 		$info = curl_getinfo($ch);
 		
 		$server_api = "http://localhost:25555/" . $_COOKIE["strategy_logintoken"];
-		echo $server_api;
+
 		
 		curl_setopt($ch2, CURLOPT_URL, $server_api);
 		curl_setopt($ch2, CURLOPT_HEADER, 0);
 		curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
 		curl_exec($ch2);
-		
-		
-		
-		echo $meid_api_raw_data;
 
-		if($info['http_code'] !== 200) {
+
+		if ($info['http_code'] !== 200) {
 			
-			echo "ERROR: WE could not log you in because of a server error.<br>Please contact us!";
-			exit;
+			$page_title_name = "Error: Failed to login";
+			$page_title_color = 1;
+			$page_description = "We couldn't log you in because of an internal server error.<br>Please contact us!";
 		}
 		
-		echo $_COOKIE["strategy_logintoken"];
-		include_once("./error/game_error/GAME_LOGIN_SUCCESS.html");
-		
-	
+		$page_title_name = "Success";
+		$page_description = "You have successfully been authenticated, you can now open your game.";
+	} else {
+		$page_title_name = "Error: Invailid Request";
+		$page_title_color = 1;
+		$page_description = "You need to login by clicking on the MeID button in game.";
+
 	}
 ?>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<title><?php echo $page_title_name; ?></title>
+		<style>
+			h1{
+				<?php
+					if ($page_title_color == 0) {
+						echo "background: linear-gradient(#00FFB7, #f440);";
+					} else {
+						echo "background: linear-gradient(#f44f, #f440);";
+					} 
+				?>
+				-webkit-background-clip: text;
+			}
+			
+		</style>
+		<link href="./assets/css/style_login.css" rel="stylesheet" />
+	
+	</head>
+	<body>
+
+		<div>
+			<h1>
+				<?php echo $page_title_name; ?>
+			</h1>
+
+			<p><?php echo $page_description; ?></p>
+		</div>
+
+	</body>
+</html>
