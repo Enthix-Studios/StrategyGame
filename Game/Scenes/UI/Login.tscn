@@ -97,3 +97,4 @@ visible_characters_behavior = 2
 [connection signal="mouse_entered" from="MeIDLoginButton" to="MeIDLoginButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="MeIDLoginButton" to="MeIDLoginButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="MeIDLoginButton" to="MeIDLoginButton" method="_on_pressed"]
+[connection signal="pressed" from="PlayButton" to="SceneManager" method="_on_play_button_pressed"]
