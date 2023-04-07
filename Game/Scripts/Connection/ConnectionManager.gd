@@ -4,6 +4,7 @@ var websocket_url = "ws://enthix.net:30001"
 
 @export var SERVER_AUTH_TOKEN = "NONE"
 @export var SERVER_CONNECTION_STATE = 0
+@export var SERVER_CONNECTION_ERRORMSG = "NONE"
 
 var socket = WebSocketPeer.new()
 
@@ -32,6 +33,8 @@ func _process(delta):
 		var code = socket.get_close_code()
 		var reason = socket.get_close_reason()
 		print("WebSocket closed with code: %d, reason %s. Clean: %s" % [code, reason, code != -1])
+		SERVER_CONNECTION_STATE = -1
+		_errorHandler(code)
 		set_process(false) # Stop processing.
 		
 func _processJsonFormat(json_string):
@@ -55,4 +58,13 @@ func _connectionHandleEvents(event, data):
 			if data == "OK":
 				SERVER_CONNECTION_STATE = 3
 				print("Client has been logged in.")
-	pass
+
+
+func _errorHandler(code):
+	match(code):
+		-1:
+			if SERVER_CONNECTION_STATE >= 2:
+				SERVER_CONNECTION_ERRORMSG = "Server connection lost"
+			else:
+				SERVER_CONNECTION_ERRORMSG = "Couldn't connect to Server"
+	
