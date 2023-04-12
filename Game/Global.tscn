@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvkq1h22fovq7"]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Connection/ConnectionManager.gd" id="1_lfiy3"]
+[ext_resource type="Script" path="res://Scripts/UI/PopUpManager.gd" id="2_166qs"]
 
 [node name="Global" type="Node2D"]
+
+[node name="ConnectionManager" type="Node2D" parent="."]
 script = ExtResource("1_lfiy3")
+
+[node name="SceneManager" type="Node2D" parent="."]
+script = ExtResource("2_166qs")

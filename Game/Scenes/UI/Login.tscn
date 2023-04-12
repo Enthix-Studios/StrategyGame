@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cqb6mfiy6epru"]
 
-[ext_resource type="Script" path="res://Scripts/Connection/MeID-button.gd" id="1_8kjl2"]
 [ext_resource type="Script" path="res://Scripts/SceneManagers/MainMenuSceneManager.gd" id="1_51bwt"]
 [ext_resource type="VideoStream" path="res://Video/main_bg.ogv" id="2_oc3rg"]
 [ext_resource type="Script" path="res://Scripts/media/loop_video.gd" id="3_t564s"]
 [ext_resource type="AudioStream" uid="uid://cehigsxovw3lx" path="res://Audio/ThemeShort.mp3" id="4_oujpb"]
 [ext_resource type="Texture2D" uid="uid://raidjbewmx5p" path="res://Image/UI/login with meid_64.png" id="5_vyr2p"]
+[ext_resource type="Script" path="res://Scripts/UI/MeID-button.gd" id="6_2re1w"]
 [ext_resource type="FontFile" uid="uid://dyrkbpqwnw8to" path="res://Fonts/good times rg.otf" id="7_pm7og"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6w36"]
@@ -66,7 +66,7 @@ grow_vertical = 0
 theme_override_styles/focus = SubResource("StyleBoxEmpty_r6w36")
 icon = ExtResource("5_vyr2p")
 flat = true
-script = ExtResource("1_8kjl2")
+script = ExtResource("6_2re1w")
 
 [node name="PlayButton" type="Button" parent="."]
 visible = false

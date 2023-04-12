@@ -2,8 +2,8 @@ extends Button
 
 
 func _on_pressed():
-	var globalScene = get_node("/root/Global")
-	var SERVER_AUTH_TOKEN = globalScene.SERVER_AUTH_TOKEN
+	var ConnectionNode = get_node("/root/Global/ConnectionManager")
+	var SERVER_AUTH_TOKEN = ConnectionNode.SERVER_AUTH_TOKEN
 	OS.shell_open("https://www.enthix.net/strategy/login?token=" + SERVER_AUTH_TOKEN)
 
 
